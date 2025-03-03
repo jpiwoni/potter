@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hogwarts Sorting Hat</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            text-align: center;
+            background-color: #1a1a1a;
+            color: white;
+            padding: 20px;
+        }
+        .question {
+            margin: 20px auto;
+            padding: 15px;
+            background: #333;
+            border-radius: 10px;
+            max-width: 500px;
+        }
+        button {
+            background-color: #ffd700;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 5px;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+        }
+        button:active, .selected {
+            background-color: #e6c300;
+            transform: scale(0.95);
+        }
+        #result {
+            font-size: 24px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>House Selector</h1>
+    <div id="quiz">
+        <div class="question">
+            <p>What trait do you value most?</p>
+            <button onclick="answer(this, 'Gryffindor')">Courage</button>
+            <button onclick="answer(this, 'Slytherin')">Ambition</button>
+            <button onclick="answer(this, 'Ravenclaw')">Intelligence</button>
+            <button onclick="answer(this, 'Hufflepuff')">Loyalty</button>
+        </div>
+        <div class="question">
+            <p>What would you do if you found a mysterious object?</p>
+            <button onclick="answer(this, 'Gryffindor')">Use it bravely</button>
+            <button onclick="answer(this, 'Slytherin')">Keep it for yourself</button>
+            <button onclick="answer(this, 'Ravenclaw')">Study it carefully</button>
+            <button onclick="answer(this, 'Hufflepuff')">Give it to someone in need</button>
+        </div>
+        <div class="question">
+            <p>Which activity excites you the most?</p>
+            <button onclick="answer(this, 'Gryffindor')">Dueling and adventure</button>
+            <button onclick="answer(this, 'Slytherin')">Climbing the ranks of power</button>
+            <button onclick="answer(this, 'Ravenclaw')">Reading and solving mysteries</button>
+            <button onclick="answer(this, 'Hufflepuff')">Helping others</button>
+        </div>
+        <button onclick="sortHouse()">Sort Me!</button>
+    </div>
+    <div id="result"></div>
+
+    <script>
+        let houseScores = { Gryffindor: 0, Slytherin: 0, Ravenclaw: 0, Hufflepuff: 0 };
+        
+        function answer(button, house) {
+            houseScores[house]++;
+            let buttons = button.parentElement.querySelectorAll("button");
+            buttons.forEach(btn => btn.classList.remove("selected"));
+            button.classList.add("selected");
+        }
+
+        function sortHouse() {
+            let maxScore = Math.max(...Object.values(houseScores));
+            let bestHouses = Object.keys(houseScores).filter(h => houseScores[h] === maxScore);
+            let finalHouse = bestHouses[Math.floor(Math.random() * bestHouses.length)];
+            
+            document.getElementById("result").innerHTML = `You belong in <strong>${finalHouse}</strong>!`;
+        }
+    </script>
+</body>
+</html>
